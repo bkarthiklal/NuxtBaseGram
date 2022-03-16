@@ -11,7 +11,9 @@
         <a v-if="step === 2" class="next-cta" @click="step++"> Next </a>
         <a v-if="step === 3" class="next-cta" @click="sharePost"> Share </a>
       </div>
+      <LoadingCard v-if="!posts.length" />
       <phone-body
+        v-else
         v-model="caption"
         :step="step"
         :posts="posts"
