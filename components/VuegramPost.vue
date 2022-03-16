@@ -5,15 +5,13 @@
         <figure class="image is-32x32">
           <img :src="post.userImage" />
         </figure>
-        <span class="username">{{ post.username }}</span>
+        <span class="username">{{ post.userName }}</span>
       </div>
     </div>
-    <div
-      class="image-container"
-      :class="post.filter"
-      :style="{ backgroundImage: 'url(' + post.postImage + ')' }"
-      @dblclick="like"
-    ></div>
+    <Carousel
+      v-if="post.postLinks.length"
+      :post-links="post.postLinks"
+    ></Carousel>
     <div class="content">
       <div class="heart">
         <i
@@ -23,9 +21,9 @@
         >
         </i>
       </div>
-      <p class="likes">{{ post.likes }} likes</p>
+      <p v-if="post.likes" class="likes">{{ post.likes }} likes</p>
       <p class="caption">
-        <span>{{ post.username }}</span> {{ post.caption }}
+        <span>{{ post.userName }}</span> {{ post.caption }}
       </p>
     </div>
   </div>
