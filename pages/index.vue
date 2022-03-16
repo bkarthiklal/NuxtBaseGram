@@ -42,8 +42,9 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import PhoneBody from '@/components/PhoneBody'
-import posts from '@/data/posts'
+// import posts from '@/data/posts'
 import filters from '@/data/filters'
 // import EventBus from './event-bus.js'
 
@@ -55,19 +56,23 @@ export default {
   data() {
     return {
       step: 1,
-      posts,
       filters,
       image: '',
       selectedFilter: '',
       caption: '',
     }
   },
-  created() {
-    // EventBus.$on('filter-selected', (evt) => {
-    //   this.selectedFilter = evt.filter
-    // })
+  computed: {
+    ...mapGetters('posts', ['getPosts']),
+    posts() {
+      return this.getPosts || []
+    },
+  },
+  async mounted() {
+    await this.bindPosts()
   },
   methods: {
+    ...mapActions('posts', ['bindPosts']),
     uploadImage(evt) {
       const files = evt.target.files
       if (!files.length) return
