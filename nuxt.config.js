@@ -55,6 +55,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
+    '@nuxtjs/firebase',
   ],
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -66,4 +67,19 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  // Firebase module configuration: https://firebase.nuxtjs.org/guide/getting-started
+  firebase: {
+    config: {
+      /** Firebase config */
+    },
+    services: {
+      auth: true,
+      firestore: true,
+      storage: true,
+      messaging: true,
+      performance: true,
+      analytics: true,
+    },
+  },
 }
