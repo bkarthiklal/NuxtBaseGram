@@ -1,0 +1,120 @@
+<template>
+  <main class="container content box">
+    <form method="post" @submit.prevent="onSubmit">
+      <!-- User name -->
+      <div class="field">
+        <label class="label" for="the_name">User Name</label>
+        <input
+          id="the_name"
+          v-model="userName"
+          disabled
+          type="text"
+          class="input"
+        />
+      </div>
+      <!-- User Image  -->
+      <div class="field">
+        <label class="label" for="the_image">User Image</label>
+        <input
+          id="the_image"
+          v-model="userImage"
+          disabled
+          type="url"
+          class="input"
+        />
+      </div>
+      <!-- Caption -->
+      <div class="field">
+        <label class="label" for="the_caption">Post caption</label>
+        <input id="the_caption" v-model="caption" type="text" class="input" />
+      </div>
+      <!-- Contents | Comma separated urls -->
+      <div class="field">
+        <label class="label" for="the_contents">Contents</label>
+        <textarea
+          id="the_contents"
+          v-model="contents"
+          class="textarea"
+        ></textarea>
+      </div>
+
+      <div class="field">
+        <input type="submit" class="button is-primary" />
+      </div>
+    </form>
+  </main>
+</template>
+
+<script>
+export default {
+  name: 'CreatePostPage',
+  data() {
+    return {
+      userName: 'Admin',
+      userImage:
+        'https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1',
+      // userImage: 'https://www.techgentsia.com/img/logo.png',
+      caption: '',
+      contents: '',
+    }
+  },
+  methods: {
+    onSubmit() {
+      const { userName, userImage, caption, contents } = this
+      if (userName && userImage && caption && contents) {
+        this.createPost()
+      } else {
+        alert('All fields are required')
+      }
+    },
+    createPost() {
+      const postLinks = this.contents
+        .split(',')
+        .map((link) => {
+          if (
+            link.includes('jpg') ||
+            link.includes('png') ||
+            link.includes('jpeg') ||
+            link.includes('gif')
+          ) {
+            return {
+              link: link.trim(),
+              type: 'image',
+            }
+          }
+          if (link.includes('mp4')) {
+            return {
+              link: link.trim(),
+              type: 'video',
+            }
+          }
+          return false
+        })
+        .filter(Boolean)
+      const postObj = {
+        userName: this.userName,
+        userImage: this.userImage,
+        caption: this.caption,
+        createdAt: new Date().getTime(),
+        postLinks,
+      }
+      this.$store
+        .dispatch('posts/addPost', postObj)
+        .then((res) => {
+          /** Clear fields and success alert */
+          alert('Post created successfully')
+          this.resetFields()
+        })
+        .catch((err) => {
+          /** Error  alert */
+          alert('Error in create post')
+          // eslint-disable-next-line no-console
+          console.log(err)
+        })
+    },
+    resetFields() {
+      Object.assign(this.$data, this.$options.data.call(this))
+    },
+  },
+}
+</script>
