@@ -1,9 +1,9 @@
 import { vuexfireMutations } from 'vuexfire'
 import { DeviceUUID } from 'device-uuid'
 
-export const state = {
-  uuid: '',
-}
+export const state = () => ({
+  uuid: null,
+})
 
 export const getters = {
   getUUID: (state) => state.uuid,
