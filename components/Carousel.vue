@@ -1,30 +1,12 @@
 <template>
-  <VueSlickCarousel
-    v-if="postLinks.length"
-    class="post-slider"
-    v-bind="settings"
-  >
-    <div v-for="(post, index) in postLinks" :key="index">
-      <div
-        class="image-container"
-        :style="{ backgroundImage: 'url(' + post.link + ')' }"
-      >
-        <img :src="post.link" />
-      </div>
-    </div>
+  <VueSlickCarousel v-if="hasDefaultSlot" class="post-slider" v-bind="settings">
+    <slot />
   </VueSlickCarousel>
 </template>
 
 <script>
 export default {
   name: 'CarouselBlock',
-  props: {
-    postLinks: {
-      type: Array,
-      required: true,
-      default: () => [],
-    },
-  },
   data() {
     return {
       settings: {
@@ -45,6 +27,11 @@ export default {
         draggable: true,
       },
     }
+  },
+  computed: {
+    hasDefaultSlot() {
+      return !!this.$slots.default
+    },
   },
 }
 </script>

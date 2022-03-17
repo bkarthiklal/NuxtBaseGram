@@ -8,10 +8,30 @@
         <span class="username">{{ post.userName }}</span>
       </div>
     </div>
-    <Carousel
-      v-if="post.postLinks.length"
-      :post-links="post.postLinks"
-    ></Carousel>
+
+    <section v-if="post.postLinks.length === 1">
+      <div v-for="(postLinkData, index) in post.postLinks" :key="index">
+        <div
+          class="image-container"
+          :style="{ backgroundImage: 'url(' + postLinkData.link + ')' }"
+        >
+          <img :src="postLinkData.link" />
+        </div>
+      </div>
+    </section>
+    <Carousel v-else-if="post.postLinks.length > 1">
+      <div v-for="(postLinkData, index) in post.postLinks" :key="index">
+        <div
+          class="image-container"
+          :style="{ backgroundImage: 'url(' + postLinkData.link + ')' }"
+        >
+          <img :src="postLinkData.link" />
+        </div>
+      </div>
+    </Carousel>
+    <div v-else class="image-container">
+      <img alt="No Data Link" />
+    </div>
     <div class="content">
       <div class="heart">
         <i
@@ -20,7 +40,7 @@
           @click="like"
         >
         </i>
-        <span class="likes" v-if="(post.likes || []).length">
+        <span v-if="(post.likes || []).length" class="likes">
           {{ post.likes.length }} likes
         </span>
       </div>
