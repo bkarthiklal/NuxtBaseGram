@@ -65,4 +65,30 @@ export const actions = {
       return e
     }
   },
+
+  async toggleLike({ getters, rootState }, postData) {
+    const toggleLike = (likes = [], uuid) => {
+      if (likes.includes(uuid)) {
+        return likes.filter((like) => like !== uuid).filter(Boolean)
+      }
+      return [...likes, uuid]
+    }
+    const { id, likes, uuid } = postData
+    const updatedLikesArray = toggleLike(likes || [], uuid)
+    delete postData.id
+    delete postData.uuid
+
+    const postDataRef = this.$fire.firestore.collection('postsList').doc(id)
+    const dataToSet = {
+      ...postData,
+      likes: updatedLikesArray,
+    }
+    try {
+      return await postDataRef.set(dataToSet)
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
+      return e
+    }
+  },
 }

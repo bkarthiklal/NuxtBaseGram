@@ -16,12 +16,14 @@
       <div class="heart">
         <i
           class="far fa-heart fa-lg"
-          :class="{ fas: post.hasBeenLiked }"
+          :class="{ fas: hasBeenLiked }"
           @click="like"
         >
         </i>
+        <span class="likes" v-if="(post.likes || []).length">
+          {{ post.likes.length }} likes
+        </span>
       </div>
-      <p v-if="post.likes" class="likes">{{ post.likes }} likes</p>
       <p class="caption">
         <span>{{ post.userName }}</span> {{ post.caption }}
       </p>
@@ -30,6 +32,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'VuegramPost',
   props: {
@@ -39,10 +42,19 @@ export default {
       default: null,
     },
   },
+  computed: {
+    ...mapGetters(['getUUID']),
+    hasBeenLiked() {
+      return (this.post.likes || []).includes(this.getUUID)
+    },
+  },
   methods: {
+    ...mapActions('posts', ['toggleLike']),
     like() {
-      // this.post.hasBeenLiked ? this.post.likes-- : this.post.likes++
-      // this.post.hasBeenLiked = !this.post.hasBeenLiked
+      this.toggleLike({
+        ...this.post,
+        uuid: this.getUUID,
+      })
     },
   },
 }
