@@ -1,4 +1,8 @@
-# vuegram
+# NuxtBaseGram
+
+Note: Add your own firebase config in nuxtConfig file and initialize firebase to get the app working
+
+Note: Project Uses Nuxt, NuxtFirebase and VuexFire
 
 ## Build Setup
 
@@ -15,6 +19,9 @@ $ npm run start
 
 # generate static project
 $ npm run generate
+
+# Host static site to firebase
+$ npm run host
 ```
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
@@ -40,7 +47,6 @@ More information about the usage of this directory in [the documentation](https:
 Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
 
 ### `pages`
 
