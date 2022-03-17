@@ -57,52 +57,25 @@ export default {
         'https://i0.wp.com/www.cssscript.com/wp-content/uploads/2020/12/Customizable-SVG-Avatar-Generator-In-JavaScript-Avataaars.js.png?fit=438%2C408&ssl=1',
       // userImage: 'https://www.techgentsia.com/img/logo.png',
       caption: '',
-      contents: '',
       contentArray: [],
     }
   },
   methods: {
     onSubmit() {
-      const { userName, userImage, caption, contents } = this
-      if (userName && userImage && caption && contents) {
+      const { userName, userImage, caption, contentArray } = this
+      if (userName && userImage && caption && contentArray.length) {
         this.createPost()
       } else {
         alert('All fields are required')
       }
     },
     createPost() {
-      const postLinks = this.contents
-        .split(',')
-        .map((link) => {
-          if (
-            link.includes('jpg') ||
-            link.includes('png') ||
-            link.includes('jpeg') ||
-            link.includes('gif')
-          ) {
-            return {
-              link: link.trim(),
-              type: 'image',
-            }
-          }
-          if (link.includes('mp4')) {
-            return {
-              link: link.trim(),
-              type: 'video',
-            }
-          }
-          return {
-            link: link.trim(),
-            type: 'image',
-          }
-        })
-        .filter(Boolean)
       const postObj = {
         userName: this.userName,
         userImage: this.userImage,
         caption: this.caption,
         createdAt: new Date().getTime(),
-        postLinks: postLinks.concat(this.contentArray),
+        postLinks: this.contentArray,
       }
       this.$store
         .dispatch('posts/addPost', postObj)
