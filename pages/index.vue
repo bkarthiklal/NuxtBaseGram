@@ -55,6 +55,16 @@ export default {
   components: {
     'phone-body': PhoneBody,
   },
+  async validate({ store }) {
+    await store.dispatch('validateUUID')
+    const UUID = store.getters.getUUID
+    if (!UUID) {
+      // eslint-disable-next-line no-console
+      console.error('Missing unique UUID')
+      return false
+    }
+    return true
+  },
   data() {
     return {
       step: 1,
