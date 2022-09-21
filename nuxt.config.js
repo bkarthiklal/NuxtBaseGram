@@ -42,6 +42,7 @@ export default {
   plugins: [
     '~/plugins/VueDragscroll',
     { src: '~/plugins/VueSlickCarousel', mode: 'client' },
+    { src: '~/plugins/UUID', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -75,6 +76,13 @@ export default {
   firebase: {
     config: {
       /** Firebase config */
+      apiKey: 'AIzaSyBY4ZdmYRk3XT-r1mtnUCu1zEjBuQvaFLI',
+      authDomain: 'tsttechhub.firebaseapp.com',
+      projectId: 'tsttechhub',
+      storageBucket: 'tsttechhub.appspot.com',
+      messagingSenderId: '796594642774',
+      appId: '1:796594642774:web:4b9d36f74639044afc40f7',
+      measurementId: 'G-W3T8RMJK8C',
     },
     services: {
       auth: true,

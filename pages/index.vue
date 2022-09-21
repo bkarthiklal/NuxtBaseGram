@@ -21,24 +21,6 @@
         :image="image"
         :selected-filter="selectedFilter"
       />
-      <div class="phone-footer">
-        <div class="home-cta" @click="goToHome">
-          <i class="fas fa-home fa-lg"></i>
-        </div>
-        <div class="upload-cta">
-          <input
-            id="file"
-            type="file"
-            name="file"
-            class="inputfile"
-            :disabled="step !== 1"
-            @change="uploadImage"
-          />
-          <label for="file">
-            <i class="far fa-plus-square fa-lg"></i>
-          </label>
-        </div>
-      </div>
     </div>
   </div>
 </template>
